@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-bg: #090d16;
+            --secondary-bg: #111827;
+            --accent-color: #38bdf8;
+            --accent-hover: #0284c7;
+            --phone-color: #10b981;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: rgba(9, 13, 22, 0.95);
+            backdrop-filter: blur(8px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            position: relative;
+        }
+
+        .logo {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--text-main);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links li a:hover {
+            color: var(--accent-color);
+        }
+
+        .hero {
+            min-height: 75vh;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 1.5rem 3rem 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h2 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero p {
+            max-width: 680px;
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #090d16;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            background-color: var(--accent-hover);
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+        }
+
+        section {
+            padding: 4rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 4vw, 2.3rem);
+            margin-bottom: 3rem;
+            color: var(--text-main);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            display: block;
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .skill-card {
+            background-color: var(--secondary-bg);
+            padding: 1.2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid var(--card-border);
+            border-top: 3px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.15);
+        }
+
+        .skill-card h3 {
+            margin-bottom: 0.8rem;
+            color: var(--accent-color);
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .skill-card ul {
+            list-style-type: none;
+        }
+
+        .skill-card li {
+            margin-bottom: 0.4rem;
+            position: relative;
+            padding-left: 1rem;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .skill-card li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background-color: var(--secondary-bg);
+            padding: 1.6rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid var(--card-border);
+            border-top: 3px solid var(--accent-color);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.15);
+        }
+
+        .project-card h3 {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-card {
+            color: var(--text-main);
+            text-decoration: none;
+            background-color: var(--secondary-bg);
+            padding: 0.9rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border: 1px solid var(--card-border);
+            font-size: 0.95rem;
+        }
+
+        .contact-card:hover {
+            background-color: var(--accent-hover);
+            color: #fff;
+            transform: translateY(-3px);
+            border-color: var(--accent-hover);
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+        }
+
+        .contact-card.phone-card:hover {
+            background-color: var(--phone-color);
+            border-color: var(--phone-color);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .contact-card.github-card:hover {
+            background-color: #24292e;
+            border-color: #404448;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #05080e;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: rgba(17, 24, 39, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: right 0.4s ease;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                border-left: 1px solid var(--card-border);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle.active .bar:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+
+            .menu-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active .bar:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .contact-card {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Ahmed Mahfouz</div>
+            
+            <button class="menu-toggle" id="mobile-menu" aria-label="Toggle Navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contacts">Contacts</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="about">
+        <h1>Ahmed Mahfouz</h1>
+        <h2>Network Engineer</h2>
+        <p>Detail-oriented Network Engineer with cross-platform expertise in Cisco, Huawei, Microsoft environments, VMware Vsphere and Fortigate Firewalls.</p>
+        <a href="#contacts" class="hero-btn">Contact Me</a>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-grid">
+            
+            <div class="skill-card">
+                <h3>Routing & Switching</h3>
+                <ul>
+                    <li>TCP/IP</li>
+                    <li>OSPF, BGP, EIGRP, RIP</li>
+                    <li>VLANs, STP, VTP</li>
+                    <li>EtherChannel & Trunking</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <h3>Network Security</h3>
+                <ul>
+                    <li>FortiGate Firewall</li>
+                    <li>Polices</li>
+                    <li>NAT/PAT</li>
+                    <li>High Availability</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <h3>Systems Administration</h3>
+                <ul>
+                    <li>Windows Server</li>
+                    <li>Active Directory</li>
+                    <li>Group Policy, File Server</li>
+                    <li>DNS, DHCP</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <h3>Virtualization & Storage</h3>
+                <ul>
+                    <li>VMware vSphere: ESXi, vCenter</li>
+                    <li>VM Management</li>
+                    <li>Dell EMC Isilon Storage</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+            
+            <div class="project-card">
+                <h3>Paragons - Firewall Fortigate 200f</h3>
+                <p>Deployed a FortiGate 200F firewall with core security policies, NAT, and network segmentation, implementing Fortinet SD-WAN across 9 ISP links for dynamic load balancing and automated link failover.</p>
+            </div>
+
+            <div class="project-card">
+                <h3>Givmod - Windows Server Implementation</h3>
+                <p>Implemented Windows Server 2019 including Active Directory (AD DS), custom GPOs, and a secure File Server, configuring automated backup and recovery workflows using Microsoft Windows Server Backup tools.</p>
+            </div>
+
+            <div class="project-card">
+                <h3>High Availability (HA) Firewall & Routing Implementation</h3>
+                <p>Deployed two FortiGate 40F firewalls configured in High Availability (HA) mode for network redundancy, configuring them to function as core Layer 3 routers managing inter-VLAN routing and perimeter security.</p>
+            </div>
+
+            <div class="project-card">
+                <h3>Campus Switching Infrastructure Deployment | Ain Shams University Hospitals</h3>
+                <p>Configured a multi-tier enterprise campus network comprising 2 core switches, 22 distribution switches (Huawei S6730), and 110 edge switches (Huawei S5730), implementing foundational Layer 2/Layer 3 configurations, VLAN segmentation, and high-availability links.</p>
+            </div>
+
+            <div class="project-card">
+                <h3>Dell PowerEdge Server & VMware Deployment | Ain Shams University Hospitals</h3>
+                <p>Executed bare-metal deployment of a Dell PowerEdge R550 server, including hardware RAID array setup, out-of-band iDRAC management configuration, and bare-metal installation/commissioning of VMware ESXi 7.0 for virtualization readiness.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacts">
+        <h2 class="section-title">Contacts</h2>
+        <div class="contact-links">
+            <a href="mailto:ahmedmahfouz680@gmail.com" class="contact-card">
+                ✉️ E-mail
+            </a>
+            <a href="https://www.linkedin.com/in/ahmedmahfouz680" target="_blank" class="contact-card">
+                🔗 LinkedIn
+            </a>
+            <a href="https://github.com/ahmedmahfouz680" target="_blank" class="contact-card github-card">
+                💻 GitHub
+            </a>
+            <a href="tel:+201108511453" class="contact-card phone-card">
+                📞 Phone
+            </a>
+            <a href="https://flowcv.com/resume/a9h7the097o3" target="_blank" class="contact-card">
+                📄 CV
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Ahmed Mahfouz. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
